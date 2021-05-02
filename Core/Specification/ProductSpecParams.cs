@@ -1,3 +1,4 @@
+
 namespace Core.Specification
 {
     public class ProductSpecParams
@@ -20,7 +21,7 @@ namespace Core.Specification
         public string Search
         {
             get => _search;
-            set => _search = value.ToUpper();
+            set => _search = value.ToLower();
         }
     }
 }
