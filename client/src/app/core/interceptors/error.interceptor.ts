@@ -4,12 +4,16 @@ import { NavigationExtras, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Observable, throwError } from "rxjs";
 import { catchError, delay } from "rxjs/operators";
+import { BusyService } from "../services/busy.service";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor{
-    constructor(private router: Router, private toastr: ToastrService) {}
+    constructor(private router: Router, private toastr: ToastrService,private busyService: BusyService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if(!req.url.includes('emailexists')){
+        this.busyService.busy();
+        }
         return next.handle(req).pipe(
             catchError(error => {
                 if(error){
